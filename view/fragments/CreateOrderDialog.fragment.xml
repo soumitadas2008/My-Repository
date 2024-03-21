@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:ev="sap.ui.base.Event" xmlns:f="sap.ui.layout.form">
+	<Dialog id="createOrderDialog" title="New Order" afterClose="afterCreateDialogClose" stretchOnPhone="true" verticalScrolling="true">
+		<content>
+			<f:SimpleForm class="editableForm" columnsL="1" columnsM="1" editable="true" emptySpanL="4" emptySpanM="4" id="newEntitySimpleForm"
+				labelSpanL="2" labelSpanM="2" layout="ResponsiveGridLayout" maxContainerCols="2" minWidth="1024">
+				<f:content>
+					<Label text="Employee" required="true"/>
+					<Select forceSelection="true" id="OrderCreateEmpSelect" placeholder="Select Employee"
+						items="{ path: 'MainModel>/Employees', templateShareable: false, sorter: { path: 'name' } }">
+						<core:Item key="{MainModel>ID}" text="{MainModel>name}"/>
+					</Select>
+					<Label text="Expense Type" id="dateLabel" labelFor="expenseTypeSelect"/>
+					<Select id="OrderCreateExpenseTypeSelect" forceSelection="true" selectedKey="2" placeholder="Select Employee"
+						items="{ path: 'MainModel>/ExpenseType', templateShareable: false, sorter: { path: 'name' } }">
+						<core:Item key="{MainModel>ID}" text="{MainModel>ExpenseType}"/>
+					</Select>
+					<Label text="Payment" labelFor="paymentType"/>
+					<CheckBox id="OrderCreatePaymentType" text="On Credit" selected="true"/>
+					<Title text="Items"/>
+					<HBox justifyContent="SpaceBetween" renderType="Bare">
+						<HBox width="70%" renderType="Bare">
+							<ComboBox id="OrderCreateItem1" width="100%"
+								items="{ path : 'MainModel>/InventorySet', sorter: { path: 'Items', descending: false }, filters : [ { path : 'DELIMITED', operator : 'EQ', value1 : '0'} ] }"
+								change="handleChange">
+								<core:Item text="{MainModel>Items}" key="{MainModel>ID}"/>
+							</ComboBox>
+						</HBox>
+						<HBox renderType="Bare" alignItems="Baseline">
+							<Button icon="sap-icon://less" type="Transparent" press="onItemLess"/>
+							<Title id="OrderCreateItem1Qty" text="0" titleStyle="H4"/>
+							<Button icon="sap-icon://add" type="Transparent" press="onItemAdd"/>
+						</HBox>
+					</HBox>
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<beginButton>
+			<Button text="Save" type="Emphasized" press="onPressDialogSave"/>
+		</beginButton>
+		<endButton>
+			<Button text="Cancel" press="onDialogCancel"></Button>
+		</endButton>
+	</Dialog>
+</core:FragmentDefinition>

@@ -1,0 +1,97 @@
+<mvc:View controllerName="sbin.oi.controller.Employees" xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:fb="sap.ui.comp.filterbar" xmlns:viz.data="sap.viz.ui5.data" xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:card="sap.f.cards" xmlns:grid="sap.ui.layout.cssgrid">
+	<f:DynamicPage id="DynamicPge" showFooter="{MainModel>/bEditMode}">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="Employees"/>
+				</f:heading>
+				<f:navigationActions>
+					<Button icon="sap-icon://nav-back" type="Transparent" press="onNavPress1" visible="true"/>
+				</f:navigationActions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader>
+				<f:content>
+					<fb:FilterBar id="Inv_filterbar" useToolbar="false" showGoButton="false" search=".onSearch">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="A" name="name" label="Employee Name" visibleInFilterBar="true">
+								<fb:control>
+									<MultiComboBox items="{MainModel>/Employees}" selectionChange="onFilterItems" name="name" id="FilterMCB" placeholder="Select Employee">
+										<core:ListItem key="{MainModel>ID}" text="{MainModel>name}" additionalText = "{MainModel>EmpCode}"/>
+										<!--<core:Item key="{MainModel>ID}" text="{MainModel>name}"/>-->
+									</MultiComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<!--this is for future version-->
+							<!--<fb:FilterGroupItem groupName="A" name="delimited" label="Show Delimited Emp" visibleInFilterBar="true">-->
+							<!--	<fb:control>-->
+							<!--		<Switch state="{MainModel>/bShowInventoryDelimited}" customTextOn="Yes" customTextOff="No" change="onDelimitedChange"/>-->
+							<!--	</fb:control>-->
+							<!--</fb:FilterGroupItem>-->
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<VBox>
+				<Table id="Emp_Table" mode="MultiSelect" visible="true" growing="true" growingScrollToLoad="true" growingThreshold="100"
+					items="{MainModel>/Employees}">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Total Employee ({MainModel>/EmpC})"/>
+							<ToolbarSpacer/>
+							<Button press="onAdd" icon="sap-icon://add-product" visible="true" tooltip="Add Item"/>
+							<Button icon="sap-icon://write-new" press="onEdit" visible="{= !${MainModel>/bEditMode}}" tooltip="Edit"/>
+							<!--<Button icon="sap-icon://negative" press="onDelete" visible="{= !!${MainModel>/bEditMode}}" tooltip="Delimit Employee"/>-->
+							<Button press="onExcelPress" icon="sap-icon://excel-attachment" tooltip="Excel Download"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column minScreenWidth="" demandPopin="false">
+							<Text text="Employee ID"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Name"/>
+						</Column>
+						<Column minScreenWidth="Phone" demandPopin="true">
+							<Text text="Address"/>
+						</Column >
+						<Column minScreenWidth="Phone" demandPopin="true">
+							<Text text="phone No"/>
+						</Column >
+						<!--for future version-->
+						<!--<Column minScreenWidth="Phone" demandPopin="true" visible="{= !!${MainModel>/bEditMode}}">-->
+						<!--	<Text text="Delimit" visible="{= !!${MainModel>/bEditMode}}"/>-->
+						<!--</Column >-->
+					</columns>
+					<items>
+						<ColumnListItem>
+							
+							<Text text="{MainModel>ID}"/>
+						
+							<Text text="{MainModel>name}"/>
+							
+							<Text text="{MainModel>address}"/>
+							
+							<Text text="{MainModel>phoneNo}"/>
+							<!--future version-->
+							<!--<CheckBox text="" visible="{= !!${MainModel>/bEditMode}}" valueState="{= ${MainModel>DELIMITED} ? 'Error' : 'Information' }" selected="{MainModel>DELIMITED}"/>-->
+							
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar >
+				<ToolbarSpacer/>
+				<Button id="saveButton" text="Save" type="Accept" press="onSave"/>
+				<Button id="cancelButton" text="Cancel" type="Reject" press="onCancel"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

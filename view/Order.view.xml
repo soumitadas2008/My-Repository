@@ -1,0 +1,91 @@
+<mvc:View controllerName="sbin.oi.controller.Order" xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:f="sap.f" xmlns:t="sap.ui.table"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:fb="sap.ui.comp.filterbar" xmlns:viz.data="sap.viz.ui5.data" xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:card="sap.f.cards" xmlns:grid="sap.ui.layout.cssgrid">
+	<f:DynamicPage id="DynamicPge2" showFooter="{MainModel>/bEditMode}">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="Orders"/>
+				</f:heading>
+				<f:navigationActions>
+					<Button icon="sap-icon://nav-back" type="Transparent" press="onNavPress1" visible="true"/>
+				</f:navigationActions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader>
+				<f:content>
+					<fb:FilterBar id="Emp_filterbar" useToolbar="false" showGoButton="false" search=".onSearch">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="A" name="Name" label="Employee Name" visibleInFilterBar="true">
+								<fb:control>
+									<MultiComboBox items="{MainModel>/orderTable}" name="Name" id="FilterMCB" selectionChange="onFilterItems" placeholder="Select Name">
+										<core:Item key="{MainModel>EmpId}" text="{MainModel>name}"/>
+									</MultiComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<VBox>
+				<Table id="Emp_Order_Table" mode="MultiSelect" visible="true" growing="true" growingScrollToLoad="true" growingThreshold="100"
+					items="{MainModel>/orderTable}">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Total Order ({MainModel>/Order_Id})"/>
+							<ToolbarSpacer/>
+							<Button press="onOrderDialogPress" icon="sap-icon://add-product" visible="true" tooltip="Add Order"/>
+							<Button press="onExcelPress" icon="sap-icon://excel-attachment" blocked="true"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column minScreenWidth="" demandPopin="false">
+							<Text text="Order Id"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Name"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Amount (₹)"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Expense Type"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Date"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Payment Status"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text=""/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<Text text="{MainModel>Order_ID}"/>
+							<ObjectIdentifier title="{MainModel>name}" text="{MainModel>EmpId}"/>
+							<Text text="{MainModel>Amount}"/>
+							<Text text="{MainModel>ExpenseType}"/>
+							<Text text="{path:'MainModel>DateTime',formatter: '.formatDate'}"/>
+							<ObjectStatus text="{= ${MainModel>Credit} > 0 ? 'On Credit' : 'Payment Done' }"
+								icon="{= ${MainModel>Credit} > 0 ? 'sap-icon://alert' : 'sap-icon://sys-enter-2' }"
+								state="{= ${MainModel>Credit} > 0 ? 'Warning' : 'Success' }"/>
+							<Button icon="sap-icon://display" visible="true"/>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar >
+				<ToolbarSpacer/>
+				<Button id="saveButton" text="Save" type="Accept" press="onSave"/>
+				<Button id="cancelButton" text="Cancel" type="Reject" press="onCancel"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

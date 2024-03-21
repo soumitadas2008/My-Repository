@@ -1,0 +1,14 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="sbin.oi.controller.LoginView"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+	<FlexBox justifyContent="Center" alignItems="Center" id="Login_Page">
+		<VBox class="sapUiSmallMargin" justifyContent="Center" height="30rem" marginTop="5rem">
+			<Label text="User"></Label>
+			<Input placeholder="Username" value="{loginModel>/User}" width="10rem" liveChange="onUsernameLiveChange"/>
+			<Label text="Password"></Label>
+			<Input placeholder="Password" type="Password" value="{loginModel>/Password}" width="10rem"/>
+			<VBox class="sapUiSmallMargin" justifyContent="Center" marginTop="5rem">
+				<Button text="Login" tooltip="Please re-check user and password" class="sapUiMediumMarginBegin" press="onLoginPress"/>
+			</VBox>
+		</VBox>
+	</FlexBox>
+</mvc:View>

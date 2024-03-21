@@ -1,0 +1,156 @@
+{
+	"_version": "1.12.0",
+	"sap.app": {
+		"id": "sbin.oi",
+		"type": "application",
+		"applicationVersion": {
+			"version": "1.0.0"
+		},
+		"dataSources": {
+			"Office_Inventory_Glitch": {
+				"uri": "https://skybfr-office-inventory.glitch.me/",
+				"type": "OData",
+				"settings": {
+					"localUri": "localService/metadata.xml"
+				}
+			}
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "sbin.oi.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "fcl"
+		},
+		"dependencies": {
+			"minUI5Version": "1.98.0",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.f": {},
+				"sap.uxap": {}
+			}
+		},
+		"config": {
+			"fullWidth": true
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.f.routing.Router",
+				"type": "View",
+				"viewType": "XML",
+				"path": "sbin.oi.view",
+				"controlId": "flexibleColumnLayout",
+				"transition": "slide",
+				"bypassed": {},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": ":layout:",
+					"name": "login",
+					"target": [
+						"login"
+					]
+				},
+				{
+					"pattern": "master/{user}/{layout}",
+					"name": "master",
+					"target": [
+						"login",
+						"master"
+					]
+				},
+				{
+					"pattern": "Inventory/{user}/{layout}",
+					"name": "Inventory",
+					"target": [
+						"login",
+						"master",
+						"Inventory"
+					]
+				},
+				{
+					"pattern": "EmployeeDues/{user}/{layout}",
+					"name": "EmployeeDues",
+					"target": [
+						"login",
+						"master",
+						"EmployeeDues"
+					]
+				},
+				{
+					"pattern": "Order/{user}/{layout}",
+					"name": "Order",
+					"target": [
+						"login",
+						"master",
+						"Order"
+					]
+				},
+					{
+					"pattern": "InvNoSale/{user}/{layout}",
+					"name": "InvNoSale",
+					"target": [
+						"login",
+						"master",
+						"InvNoSale"
+					]
+				},
+					{
+					"pattern": "Employees/{user}/{layout}",
+					"name": "Employees",
+					"target": [
+						"login",
+						"master",
+						"Employees"
+					]
+				}
+				
+			],
+			"targets": {
+				"login": {
+					"name": "LoginView",
+					"controlAggregation": "beginColumnPages"
+				},
+				"master": {
+					"name": "Master",
+					"controlAggregation": "midColumnPages"
+				},
+				"Inventory": {
+					"name": "Inventory",
+					"controlAggregation": "endColumnPages"
+				},
+				"EmployeeDues": {
+					"name": "EmployeeDues",
+					"controlAggregation": "endColumnPages"
+				},
+				"Order": {
+					"name": "Order",
+					"controlAggregation": "endColumnPages"
+				},
+					"InvNoSale": {
+					"name": "InvNoSale",
+					"controlAggregation": "endColumnPages"
+				},
+					"Employees": {
+					"name": "Employees",
+					"controlAggregation": "endColumnPages"
+				}
+			}
+		},
+		"models": {
+			"": {
+				"type": "sap.ui.model.odata.v2.ODataModel",
+				"settings": {
+					"defaultOperationMode": "Server",
+					"defaultBindingMode": "OneWay",
+					"defaultCountMode": "Request"
+				},
+				"dataSource": "Office_Inventory_Glitch",
+				"preload": true
+			}
+		}
+	}
+}

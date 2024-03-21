@@ -1,0 +1,82 @@
+<mvc:View controllerName="sbin.oi.controller.EmployeeDues" xmlns:form="sap.ui.layout.form" xmlns="sap.m" xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:fb="sap.ui.comp.filterbar" xmlns:viz.data="sap.viz.ui5.data" xmlns:l="sap.ui.layout"
+	xmlns:core="sap.ui.core" xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds" xmlns:card="sap.f.cards" xmlns:grid="sap.ui.layout.cssgrid">
+	<f:DynamicPage id="DynamicPge2" showFooter="{MainModel>/bEditMode}">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading>
+					<Title text="Employee Dues"/>
+				</f:heading>
+				<f:navigationActions>
+					<Button icon="sap-icon://nav-back" type="Transparent" press="onNavPress1" visible="true"/>
+				</f:navigationActions>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader>
+				<f:content>
+					<fb:FilterBar id="Emp_filterbar" useToolbar="false" showGoButton="false" search=".onSearch">
+						<fb:filterGroupItems>
+							<fb:FilterGroupItem groupName="A" name="Name" label="Employee Name" visibleInFilterBar="true">
+								<fb:control>
+									<MultiComboBox items="{MainModel>/EmpDueSet}" name="Name" id="FilterMCB" selectionChange="onFilterItems" placeholder="Select Name">
+										<core:ListItem key="{MainModel>EmpId}" text="{MainModel>EmpName}" additionalText = "{MainModel>EmpCode}"/>
+										<!--<core:Item key="{MainModel>DuesId}" text="{MainModel>EmpName}"/>-->
+									</MultiComboBox>
+								</fb:control>
+							</fb:FilterGroupItem>
+							<fb:FilterGroupItem groupName="A" name="delimited" label="Show Cleared dues" visibleInFilterBar="true">
+								<fb:control>
+									<Switch state="{MainModel>/bShowClearedDues}" customTextOn="Yes" customTextOff="No" change="_onProductMatched"/>
+								</fb:control>
+							</fb:FilterGroupItem>
+						</fb:filterGroupItems>
+					</fb:FilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<VBox>
+				<Table id="Emp_Due_Table" mode="MultiSelect" visible="true" growing="true" growingScrollToLoad="true" growingThreshold="100"
+					items="{MainModel>/EmpDueSet}">
+					<headerToolbar>
+						<Toolbar>
+							<Title text="Employee Dues ( ₹{MainModel>/DueSum})"/>
+							<ToolbarSpacer/>
+							<Button press="onExcelPress" icon="sap-icon://excel-attachment" tooltip="Download Excel"/>
+						</Toolbar>
+					</headerToolbar>
+					<columns>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Employee Name"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Due Amount (₹)"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true">
+							<Text text="Clear Due"/>
+						</Column>
+						<Column minScreenWidth="Tablet" demandPopin="true" visible="{= ${MainModel>/bDueCleared}}">
+							<Text text="Due Cleared"/>
+						</Column>
+					</columns>
+					<items>
+						<ColumnListItem>
+							<Text text="{MainModel>EmpName}"/>
+							<Text text="{MainModel>Amount}"/>
+							<Button icon="sap-icon://display" visible="true"/>
+							<Text text="{MainModel>/Cleared}"/>
+						</ColumnListItem>
+					</items>
+				</Table>
+			</VBox>
+		</f:content>
+		<f:footer>
+			<OverflowToolbar >
+				<ToolbarSpacer/>
+				<Button id="saveButton" text="Save" type="Accept" press="onSave"/>
+				<Button id="cancelButton" text="Cancel" type="Reject" press="onCancel"/>
+			</OverflowToolbar>
+		</f:footer>
+	</f:DynamicPage>
+</mvc:View>

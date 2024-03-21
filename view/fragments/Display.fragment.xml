@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+	<ResponsivePopover id="PopOver1" class="sapUiContentPadding" contentWidth="30rem" contentHeight="15rem" showHeader="false"
+		placement="HorizontalPreferredLeft" titleAlignment="Center">
+		<content>
+			<Table id="OrderInventorys" sticky="ColumnHeaders" items="{MainModel>/OrderItems}">
+				<columns>
+					<Column>
+						<Text text="Order ID"/>
+					</Column>
+					<Column>
+						<Text text="Item Quantity"/>
+					</Column>
+					<Column>
+						<Text text="Quantity"/>
+					</Column>
+					<Column>
+						<Text text="Amount"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<Text text="{MainModel>Order_ID}"/>
+						<Text text="{MainModel>Items}"/>
+						<Text text="{MainModel>Quantity}"/>
+						<Text text="{MainModel>Amount}"/>
+					</ColumnListItem>
+				</items>
+			</Table>
+		</content>
+	</ResponsivePopover>
+</core:FragmentDefinition>
